@@ -1,0 +1,15 @@
+{
+    "hosting": {
+        "site": "rk-task-osiz",
+        "public": "dist/mytask-osiz2",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "rewrites": [{
+            "source": "**",
+            "destination": "/index.html"
+        }]
+    }
+}
