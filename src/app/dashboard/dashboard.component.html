@@ -1,8 +1,26 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
 <div class="pie__chart__container">
-    <h4>Pie Chart</h4>
-    <div id="chart">
-        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels" [responsive]="chartOptions.responsive"></apx-chart>
-    </div>
+    <app-pie-chart></app-pie-chart>
+</div>
+
+<div class="line__chart__container">
+    <app-line-chart></app-line-chart>
+</div>
+
+<div>
+    <table class="table table-hoverble">
+        <thead>
+            <tr>
+                <th scope="col">Time</th>
+                <th scope="col">INR</th>
+                <th scope="col">USD</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let r of lineData ; let ri = index">
+                <td>{{r.time.updatedISO | date:"H:mm a"}}</td>
+                <td>{{r.bpi.INR.rate_float | currency:"INR"}}</td>
+                <td>{{r.bpi.USD.rate_float | currency}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

@@ -1,7 +1,7 @@
 {
     "hosting": {
         "site": "rk-task-osiz",
-        "public": "dist/mytask-osiz2",
+        "public": "dist/mytask-osiz",
         "ignore": [
             "firebase.json",
             "**/.*",

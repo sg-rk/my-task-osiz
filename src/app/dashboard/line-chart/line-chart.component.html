@@ -1,0 +1,19 @@
+<section class="filter__section" *ngIf="!loading">
+    <div class="filter__section filter__section-datePicker d-md-flex">
+        <input type="datetime-local" class="form-control" [(ngModel)]="startDateTime" />
+        <input type="datetime-local" class="form-control" [(ngModel)]="customNow" />
+        <button class="filter__btn filter__section-datePicker-btn" [class.active]="currentFilter == 'S'" (click)="getPriceHistory('S')">Search</button>
+    </div>
+    <div class="filter__section filter__section-btns">
+        <button class="filter__btn filter__btn-1m" [class.active]="currentFilter == 'Y'" (click)="doFilter('Y')">1Y</button>
+        <button class="filter__btn filter__btn-1m" [class.active]="currentFilter == 'M'" (click)="doFilter('M')">1M</button>
+        <button class="filter__btn filter__btn-1w" [class.active]="currentFilter == 'w'" (click)="doFilter('w')">1w</button>
+        <button class="filter__btn filter__btn-1d" [class.active]="currentFilter == 'd'" (click)="doFilter('d')">1d</button>
+        <button class="filter__btn filter__btn-1h" [class.active]="currentFilter == 'h'" (click)="doFilter('h')">1h</button>
+        <button class="filter__btn filter__btn-1m" [class.active]="currentFilter == 'm'" (click)="doFilter('m')">1m</button>
+    </div>
+</section>
+
+<div *ngIf="!loading">
+    <apx-chart [series]="series" [chart]="chart" [dataLabels]="dataLabels" [markers]="markers" [title]="title" [fill]="fill" [yaxis]="yaxis" [xaxis]="xaxis" [tooltip]="tooltip" [autoUpdateSeries]="true"></apx-chart>
+</div>

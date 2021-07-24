@@ -1,50 +1,35 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { ChartComponent } from "ng-apexcharts";
+import { Component, OnInit } from "@angular/core";
 
-import {
-  ApexNonAxisChartSeries,
-  ApexResponsive,
-  ApexChart
-} from "ng-apexcharts";
-
-export type ChartOptions = {
-  series: ApexNonAxisChartSeries | any;
-  chart: ApexChart | any;
-  responsive: ApexResponsive[] | any;
-  labels: any | any;
-};
+import { DashboardService } from "./dashboard.service";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
-  @ViewChild("chart") chart: ChartComponent | any;
-  public chartOptions: Partial<ChartOptions>;
+  constructor(
+    private ds: DashboardService,
+  ) {
 
-  constructor() {
-    this.chartOptions = {
-      series: [44, 55, 13, 43, 22],
-      chart: {
-        width: 380,
-        type: "pie"
+  }
+
+  lineData : any = [];
+
+  ngOnInit(){  
+    this.getCurrentPrice();
+  }
+
+  getCurrentPrice(){
+    this.ds.getCurrentPrice().subscribe(
+      (res: any) => {
+        console.log(res);
+        this.lineData.unshift(res);
       },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
-    };
+      (error: any) =>{
+        console.error(error);
+      }
+    )
   }
 }
