@@ -1,4 +1,10 @@
-<app-header></app-header>
-<div class="container-sm mt-2">
-    <router-outlet></router-outlet>
+<div class="app__container" [class.loading__div]="pageLoading">
+    <app-header></app-header>
+    <div class="container-sm mt-2">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<div *ngIf="pageLoading" class="page__loading__div">
+    <h4>Loading...</h4>
 </div>

@@ -32,3 +32,7 @@ input.form-control.ng-pristine.ng-untouched.ng-valid {
     justify-content: space-between;
     margin: 1rem 0px !important;
 }
+
+button.filter__btn.filter__section-datePicker-btn {
+    margin: .3em 0em !important;
+}

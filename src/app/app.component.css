@@ -1,0 +1,14 @@
+.app__container {
+    opacity: 1 !important;
+    transition: all 0.7s !important;
+}
+
+.app__container.loading__div {
+    opacity: 0.2 !important;
+}
+
+.page__loading__div {
+    top: 50% !important;
+    position: fixed !important;
+    left: 45% !important;
+}

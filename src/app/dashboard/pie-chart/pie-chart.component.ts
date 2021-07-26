@@ -23,21 +23,29 @@ export type ChartOptions = {
 export class PieChartComponent implements OnInit {
   @ViewChild("chart")
   chart: ChartComponent = new ChartComponent;
+
   public chartOptions!: Partial<ChartOptions>;
+
+  chartLoading : boolean = true;
 
   constructor() {    
   }
 
   ngOnInit(){  
-    this.setCharts();
+    this.setCharts();      
   }
 
   setCharts(){
     this.chartOptions = {
       series: [44, 55, 13, 43, 22],
       chart: {
-        width: 380,
+        width: '400px',
         type: "pie",
+        animations: {
+          enabled: true,
+          easing: 'easeinout',
+          speed: 1000
+        }
       },
       labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
       responsive: [
@@ -45,7 +53,7 @@ export class PieChartComponent implements OnInit {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200,
+              width: '100%',
             },
             legend: {
               position: "bottom",
@@ -54,5 +62,6 @@ export class PieChartComponent implements OnInit {
         },
       ],
     };
+    this.chartLoading = false;
   }
 }

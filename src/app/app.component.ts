@@ -1,10 +1,22 @@
-import { Component } from '@angular/core';
+import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit  {
   title = 'mytask-osiz';
+  pageLoading : boolean = true;
+  
+  constructor(
+  ) {}
+
+  ngAfterViewInit(){
+    console.log('view init');
+    setTimeout(() => {
+      this.pageLoading = false;      
+    }, 2000);
+  }
+  
 }

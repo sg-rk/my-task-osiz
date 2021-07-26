@@ -28,6 +28,6 @@ export class DashboardService {
   }
 
   getPriceHistory(startDate: any, endDate: any){
-    return this.http.get(`https://production.api.coindesk.com/v2/price/values/BTC?start_date=${startDate}&end_date=${endDate}&ohlc=false`);
+    return this.http.get(`https://production.api.coindesk.com/v2/price/values/BTC?start_date=${startDate}&end_date=${endDate}&ohlc=true`);
   }
 }
