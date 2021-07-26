@@ -103,7 +103,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
             }
         
         this.lineChart.updateOptions(this.chartOptions);
-        // this.lineChart.render();
+        this.lineChart.render();
         this.lineChart.updateSeries([{data: this.lineData}]);
 
         console.log(this.lineChart.xaxis);
