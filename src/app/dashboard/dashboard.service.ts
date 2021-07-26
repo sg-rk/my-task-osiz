@@ -19,10 +19,6 @@ export class DashboardService {
     this.lastYearDate = this.datepipe.transform(this.lastYearDate, 'yyyy-MM-dd');
   }
 
-  getPriceHistoryz(){
-    return this.http.get(`https://api.coindesk.com/v1/bpi/historical/INR.json?start=${this.lastYearDate}&end=${this.date}`);    
-  }
-
   getCurrentPrice(): any{
     return this.http.get('https://api.coindesk.com/v1/bpi/currentprice/INR.json');
   }
