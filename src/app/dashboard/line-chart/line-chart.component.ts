@@ -43,6 +43,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
   }
 
   lineData: any = [];
+  initLength !: number;
   loading: boolean = true;
   chartLoading: boolean = false;
 
@@ -85,10 +86,15 @@ export class LineChartComponent implements OnInit, OnDestroy {
   getPriceHistory() {
     this.lineData = [];
 
-    this.lineChart.updateSeries([{data: this.lineData}]);
+    // this.lineChart.updateSeries([{data: this.lineData}]);
 
     this.ds.getPriceHistory(this.startDateTime, this.customNow).subscribe(
       (res: any) => {
+
+        if(!this.initLength){
+          this.initLength = res.data.entries.length;
+        }
+
         this.lineData = res.data.entries;
   
         this.chartOptions.xaxis = {
@@ -97,12 +103,15 @@ export class LineChartComponent implements OnInit, OnDestroy {
             }
         
         this.lineChart.updateOptions(this.chartOptions);
-        this.lineChart.render();
+        // this.lineChart.render();
         this.lineChart.updateSeries([{data: this.lineData}]);
 
         console.log(this.lineChart.xaxis);
         this.chartLoading = false;
-        this.startUpdate();
+        setTimeout(() => {
+          this.startUpdate();          
+        }, 0);
+
       },
       (error: any) => {
         alert(error.message);
@@ -145,19 +154,15 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     this.currentFilter = filterType;
-    console.log(et, dt);
 
     // dt = new DatePipe('en-US').transform(dt, 'yyyy-MM-ddTHH:mm', 'UTC');
     // et = new DatePipe('en-US').transform(et, 'yyyy-MM-ddTHH:mm', 'UTC');
     dt = dt.toLocaleString("en-US", {timeZone: "UTC"});
     et = et.toLocaleString("en-US", {timeZone: "UTC"});
-    console.log(et, dt);
 
     this.customNow = this.datepipe.transform(dt, "yyyy-MM-ddTHH:mm");
     this.startDateTime = this.datepipe.transform(et, "yyyy-MM-ddTHH:mm");
 
-    console.log(this.customNow, this.startDateTime);
-    console.log(et, dt);
     this.getPriceHistory();
   }
 
@@ -182,7 +187,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
         height: 350,
         zoom: {
           type: "x",
-          enabled: false,
+          enabled: true,
           autoScaleYaxis: true,
         },
         toolbar: {
@@ -268,26 +273,31 @@ export class LineChartComponent implements OnInit, OnDestroy {
 
   interval: any;
   startUpdate() {
+    setTimeout(() => {
+      this.setCurrentPrice();      
+    }, 0);
     this.interval = setInterval(() => {
-      this.ds.getCurrentPrice().subscribe(
-        (res: any) => {
-          let str = res.time.updatedISO;
-          let timeST = new Date(str).getTime();
-          
-          // this.lineData.splice(0,1);
-          this.lineData.push([
-            timeST,
-            Number(res.bpi.USD.rate_float.toFixed(2)),
-          ]);
-
-          this.lineChart.updateSeries([{data: this.lineData}]);
-        },
-        (error: any) => {
-          alert("Something went wrong !!");
-          console.error(error.message);
-        }
-      );
+      // this.lineData.splice(0,1);
+      this.setCurrentPrice();
     }, 1000);
+  }
+
+  setCurrentPrice(){
+    this.ds.getCurrentPrice().subscribe(
+      (res: any) => {
+        let str = res.time.updatedISO;
+        let timeST = new Date(str).getTime();
+        this.lineData.push([
+          timeST,
+          Number(res.bpi.USD.rate_float.toFixed(2)),
+        ]);
+        this.lineChart.updateSeries([{data: this.lineData}]);
+      },
+      (error: any) => {
+        alert("Something went wrong !!");
+        console.error(error.message);
+      }
+    );
   }
 
   stopGetting() {    
